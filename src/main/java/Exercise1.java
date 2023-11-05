@@ -12,7 +12,7 @@ public class Exercise1 implements Exercise {
         while (nums.hasNextInt()) {
             int num = nums.nextInt();
             if (isPrime(num)) {
-                System.out.print(num + " ");
+                System.out.printf("%d ", num);
             }
         }
 
