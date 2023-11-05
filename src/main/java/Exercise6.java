@@ -1,6 +1,4 @@
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Exercise6 implements Exercise {
 
@@ -11,22 +9,11 @@ public class Exercise6 implements Exercise {
         System.out.print("Введите n целых чисел через пробел:\n> ");
         Scanner nums = new Scanner(sc.nextLine());
 
-        Set<Integer> fib = new HashSet<>();
-        int f0 = 1, f1 = 1, f2 = 1;
-        fib.add(1);
-
         System.out.println("Числа, принадлежащие ряду Фибоначчи:");
         while (nums.hasNextInt()) {
             int num = nums.nextInt();
 
-            while (f2 < num) {
-                f2 = f0 + f1;
-                fib.add(f2);
-                f0 = f1;
-                f1 = f2;
-            }
-
-            if (fib.contains(num)) {
+            if (FibonacciSequence.getInstance().contains(num)) {
                 System.out.println(num);
             }
         }
