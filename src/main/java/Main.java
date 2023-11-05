@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 import java.math.BigInteger;
 
 public class Main {
@@ -12,13 +10,7 @@ public class Main {
 
         for (int input = sc.nextInt(); input != 0; input = sc.nextInt()) {
             sc.nextLine();
-        /*
-        В Java 17 можно заменить на 
-            case 1 -> ex1();
-            case 2 -> ex2();
-            case 3 -> ex3();
-            ...
-        */
+
             switch (input) {
                 case 1:
                     ex1();
@@ -73,17 +65,22 @@ public class Main {
         System.out.print("Простые числа: ");
         while (nums.hasNextInt()) {
             int num = nums.nextInt();
-            if (isPrime(num)) System.out.print(num + " "); // Желательно всегда использовать {} даже для однострочного оператора
+            if (isPrime(num)) {
+                System.out.print(num + " ");
+            }
         }
 
-        System.out.println('\n'); // Тут 2 переноса нужен? 
+        System.out.println('\n');
     }
 
     static boolean isPrime(int num) {
         if (num <= 1) return false;
 
-        for (int i = 2; i <= (int)Math.sqrt(num); i++)
-            if (num % i == 0) return false;
+        for (int i = 2; i <= (int)Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
 
         return true;
     }
@@ -97,14 +94,16 @@ public class Main {
         System.out.print("Счастливые числа: ");
         while (nums.hasNextInt()) {
             int num = nums.nextInt();
-            if (isHappy(num)) System.out.print(num + " ");
+            if (isHappy(num)) {
+                System.out.printf("%d ", num);
+            }
         }
 
         System.out.println('\n');
     }
 
     static boolean isHappy(int num) {
-        HashSet<Integer> seenNums = new HashSet<>(); // Set<Integer> seenNums = new HashSet<>(), это часть принципа LSP
+        Set<Integer> seenNums = new HashSet<>();
 
         while (num > 1 && !seenNums.contains(num)) {
             seenNums.add(num);
@@ -128,51 +127,15 @@ public class Main {
     static void ex3() {
         System.out.print("Введите цифру от 0 до 9:\n> ");
         int input = sc.nextInt();
-        // Отступы, не лепим код в кучу
-        switch (input) { // Можно упросить как в main
-            case 0:
-                System.out.println("0 в прописи будет \"ноль\"\n"); // Кст можно закатать в enum и упросить сильно код
-                break;
 
-            case 1:
-                System.out.println("1 в прописи будет \"один\"\n");
-                break;
+        // Понимаю, что по правилам нужно создать enum, но для такого одиночного случая можно и так
+        String[] digitToWord = { "ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять" };
 
-            case 2:
-                System.out.println("2 в прописи будет \"два\"\n");
-                break;
-
-            case 3:
-                System.out.println("3 в прописи будет \"три\"\n");
-                break;
-
-            case 4:
-                System.out.println("4 в прописи будет \"четыре\"\n");
-                break;
-
-            case 5:
-                System.out.println("5 в прописи будет \"пять\"\n");
-                break;
-
-            case 6:
-                System.out.println("0 в прописи будет \"шесть\"\n");
-                break;
-
-            case 7:
-                System.out.println("7 в прописи будет \"семь\"\n");
-                break;
-
-            case 8:
-                System.out.println("8 в прописи будет \"восемь\"\n");
-                break;
-
-            case 9:
-                System.out.println("9 в прописи будет \"девять\"\n");
-                break;
-
-            default:
-                System.out.println("Это не цифра\n");
-                break;
+        if (input >= 0 && input <= 9) {
+            System.out.printf("%d в прописи будет \"%s\"\n\n", input, digitToWord[input]);
+        }
+        else {
+            System.out.println("Это не цифра\n");
         }
     }
 
@@ -182,12 +145,14 @@ public class Main {
     static void ex4() {
         System.out.print("Введите степень n от 2 до 127:\n> ");
         byte pow = sc.nextByte();
-        if (pow < 2) pow = 2;
+        if (pow < 2) {
+            pow = 2;
+        }
 
-        ArrayList<BigInteger> possibleValues = new ArrayList<>(100); // List<BigInteger> possibleValues = new ArrayList<>(100)
+        List<BigInteger> possibleValues = new ArrayList<>(100);
         for (int i = 1; i <= 100; i++) {
-            possibleValues.add(new BigInteger(i+"").pow(pow)); // Или используем Integer.toString() или BigInteger.valueOf(),
-        }                                                      // меняя int i на long i
+            possibleValues.add(new BigInteger(Integer.toString(i)).pow(pow));
+        }
 
         BigInteger a, b, c;
 
@@ -199,9 +164,9 @@ public class Main {
 
                 c = a.add(b);
 
-                if (possibleValues.contains(c))
-                    System.out.printf("%d^%d + %d^%d = %d^%d%n",
-                            a.sqrt(), pow, b.sqrt(), pow, c.sqrt(), pow);
+                if (possibleValues.contains(c)) {
+                    System.out.printf("%d^%d + %d^%d = %d^%d%n", a.sqrt(), pow, b.sqrt(), pow, c.sqrt(), pow);
+                }
             }
         }
 
@@ -221,8 +186,7 @@ public class Main {
             nextIsNegative = !nextIsNegative;
         }
 
-        System.out.printf("%d - %d/2 + %d/3 - %d/4 + ... + %d/9999 - %d/10000 = %f\n\n",
-                n, n, n, n, n, n, sum);
+        System.out.printf("%d - %d/2 + %d/3 - %d/4 + ... + %d/9999 - %d/10000 = %f\n\n", n, n, n, n, n, n, sum);
     }
 
     // 6. Ввести с консоли n целых чисел и поместить их в массив.
@@ -232,7 +196,7 @@ public class Main {
         System.out.print("Введите n целых чисел через пробел:\n> ");
         Scanner nums = new Scanner(sc.nextLine());
 
-        HashSet<Integer> fib = new HashSet<>(); // Set<Integer> fib = new HashSet<>()
+        Set<Integer> fib = new HashSet<>();
         int f0 = 1, f1 = 1, f2 = 1;
         fib.add(1);
 
@@ -247,8 +211,9 @@ public class Main {
                 f1 = f2;
             }
 
-            if (fib.contains(num))
+            if (fib.contains(num)) {
                 System.out.println(num);
+            }
         }
 
         System.out.println();
@@ -273,9 +238,11 @@ public class Main {
 
     static boolean isPalindrome(String str) {
         int i = 0, j = str.length() - 1;
-        while (i < j)
-            if (str.charAt(i++) != str.charAt(j--))
+        while (i < j) {
+            if (str.charAt(i++) != str.charAt(j--)) {
                 return false;
+            }
+        }
 
         return true;
     }
@@ -287,14 +254,15 @@ public class Main {
         System.out.print("Введите t целых чисел через пробел:\n> ");
         Scanner nums = new Scanner(sc.nextLine());
 
-        int num0 = nums.nextInt(), num1; // Так лучше объявления не писать 
+        int num0 = nums.nextInt(); // num0 и num1 - первые два положительные
+        int num1;                  // числа, расположенные подряд
         while (nums.hasNextInt()) {
-            num1 = nums.nextInt(); // Нужны метоимена, че за num0 и num1?
+            num1 = nums.nextInt();
 
             if (num0 > 0 && num1 > 0) {
-                System.out.println(
-                        String.format("%f", (double)num1 / (double)num0).split(",")[1] // Надо рефакторить
-                );
+                double division = (double)num1 / (double)num0;
+                String fraction = Double.toString(division).split(",")[1]; // Дробная часть десятичной дроби
+                System.out.println(fraction);
                 return;
             }
 
@@ -313,18 +281,23 @@ public class Main {
         int num = 0; // Первое положительное число
         while (nums.hasNextInt()) {
             num = nums.nextInt();
-            if (num > 0) break;
+            if (num > 0) {
+                break;
+            }
         }
-        if (num <= 0) return;
+        if (num <= 0) {
+            return;
+        }
 
-        System.out.println("Треугольник Паскаля для " + num + ":"); // String.format()
+        System.out.printf("Треугольник Паскаля для %d:\n", num);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j <= i; j++) {
                 int pascalsTriangleNum = num;
-                for (int k = 0; k < j; k++)
+                for (int k = 0; k < j; k++) {
                     pascalsTriangleNum = pascalsTriangleNum * (i - k) / (k + 1);
+                }
 
-                System.out.print(pascalsTriangleNum + " "); // String.format()
+                System.out.printf("%d ", pascalsTriangleNum);
             }
 
             System.out.println();
